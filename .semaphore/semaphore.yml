@@ -35,7 +35,7 @@ blocks:
           - cache store ivy2-$SEMAPHORE_GIT_BRANCH .ivy2/cache
           - cache store gradle-$SEMAPHORE_GIT_BRANCH .gradle/caches
 
- - name: Scala with Play on Java 8
+  - name: Scala with Play on Java 8
    task:
       jobs:
         - name: Setup
@@ -48,16 +48,18 @@ blocks:
         - name: Run tests
           commands:
             - ./scripts/test-sbt
-            - scripts/test-gradle
+            - ./scripts/test-gradle
       prologue:
           commands:
             - checkout
             # Set the language version
             - sem-version scala 2.12
-            - cache restore sbt-$SEMAPHORE_GIT_BRANCH-$(checksum pom.xml),sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
+            - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
+            - cache restore ivy2-$SEMAPHORE_GIT_BRANCH,ivy2-master
+            - cache restore gradle-$SEMAPHORE_GIT_BRANCH,gradle-master
 
       epilogue:
         commands:
-          - cache store sbt-$SEMAPHORE_GIT_BRANCH-$(checksum pom.xml) .sbt
-          - cache store ivy2-$SEMAPHORE_GIT_BRANCH-$(checksum pom.xml) .ivy2/cache
-          - cache store gradle-$SEMAPHORE_GIT_BRANCH-$(checksum pom.xml) .gradle/caches
+          - cache store sbt-$SEMAPHORE_GIT_BRANCH .sbt
+          - cache store ivy2-$SEMAPHORE_GIT_BRANCH .ivy2/cache
+          - cache store gradle-$SEMAPHORE_GIT_BRANCH .gradle/caches
