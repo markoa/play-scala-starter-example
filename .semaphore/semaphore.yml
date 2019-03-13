@@ -30,7 +30,8 @@ blocks:
           - cache store ivy2-$SEMAPHORE_GIT_BRANCH .ivy2/cache
           - cache store gradle-$SEMAPHORE_GIT_BRANCH .gradle/caches
   
-  - name: Scala with Play on Java 8
+blocks:
+ - name: Scala with Play on Java 8
    task:
       prologue:
           commands:
