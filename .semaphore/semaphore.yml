@@ -21,8 +21,32 @@ blocks:
       jobs:
         - name: Tests
           commands:
-            - bash scripts/test-sbt
-            - bash scripts/test-gradle
+            - ./scripts/test-sbt
+            - ./scripts/test-gradle
+
+      epilogue:
+        commands:
+          - cache store sbt-$SEMAPHORE_GIT_BRANCH .sbt
+          - cache store ivy2-$SEMAPHORE_GIT_BRANCH .ivy2/cache
+          - cache store gradle-$SEMAPHORE_GIT_BRANCH .gradle/caches
+  
+  - name: Scala with Play on Java 8
+   task:
+      prologue:
+          commands:
+            - checkout
+            # Set the language version
+            - sem-version scala 2.12
+            - sem-version java 8
+            - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
+            - cache restore ivy2-$SEMAPHORE_GIT_BRANCH,ivy2-master
+            - cache restore gradle-$SEMAPHORE_GIT_BRANCH,gradle-master
+
+      jobs:
+        - name: Tests
+          commands:
+            - ./scripts/test-sbt
+            - ./scripts/test-gradle
 
       epilogue:
         commands:
