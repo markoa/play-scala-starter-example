@@ -1,0 +1,63 @@
+version: v1.0
+name: YAML file example for Scala with Play project
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+ - name: Scala with Play on Java 11
+   task:
+      jobs:
+        - name: Setup
+          commands:
+            # Set the JDK version
+            - sem-version java 11
+            #- curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
+      
+      jobs:
+        - name: Run tests
+          commands:
+            - ./scripts/test-sbt
+            - ./scripts/test-gradle
+      prologue:
+          commands:
+            - checkout
+            # Set the language version
+            - sem-version scala 2.12
+            - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
+            - cache restore ivy2-$SEMAPHORE_GIT_BRANCH,ivy2-master
+            - cache restore gradle-$SEMAPHORE_GIT_BRANCH,gradle-master
+
+      epilogue:
+        commands:
+          - cache store sbt-$SEMAPHORE_GIT_BRANCH .sbt
+          - cache store ivy2-$SEMAPHORE_GIT_BRANCH .ivy2/cache
+          - cache store gradle-$SEMAPHORE_GIT_BRANCH .gradle/caches
+
+ - name: Scala with Play on Java 8
+   task:
+      jobs:
+        - name: Setup
+          commands:
+            # Set the JDK version
+            - sem-version java 8
+            #- curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
+      
+      jobs:
+        - name: Run tests
+          commands:
+            - ./scripts/test-sbt
+            - scripts/test-gradle
+      prologue:
+          commands:
+            - checkout
+            # Set the language version
+            - sem-version scala 2.12
+            - cache restore sbt-$SEMAPHORE_GIT_BRANCH-$(checksum pom.xml),sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
+
+      epilogue:
+        commands:
+          - cache store sbt-$SEMAPHORE_GIT_BRANCH-$(checksum pom.xml) .sbt
+          - cache store ivy2-$SEMAPHORE_GIT_BRANCH-$(checksum pom.xml) .ivy2/cache
+          - cache store gradle-$SEMAPHORE_GIT_BRANCH-$(checksum pom.xml) .gradle/caches
