@@ -24,7 +24,7 @@ blocks:
             - sem-version java 11
 
       jobs:
-        - name: Run tests
+        - name: Tests
           commands:
             - bash scripts/test-sbt
             - bash scripts/test-gradle
