@@ -14,9 +14,9 @@ blocks:
             # Set the language version
             - sem-version scala 2.12
             - curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
-            - $JABBA_HOME/bin/jabba install 1.11.0-1
+            - $JABBA_HOME/bin/jabba install 1.11.0-2
             - unset _JAVA_OPTIONS
-            - export JAVA_HOME="$JABBA_HOME/jdk/1.11.0-1" && export PATH="$JAVA_HOME/bin:$PATH" && java -Xmx32m -version
+            - export JAVA_HOME="$JABBA_HOME/jdk/1.11.0-2" && export PATH="$JAVA_HOME/bin:$PATH" && java -Xmx32m -version
             - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
             - cache restore ivy2-$SEMAPHORE_GIT_BRANCH,ivy2-master
             - cache restore gradle-$SEMAPHORE_GIT_BRANCH,gradle-master
