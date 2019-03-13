@@ -13,15 +13,10 @@ blocks:
             - checkout
             # Set the language version
             - sem-version scala 2.12
+            - sem-version java 11
             - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
             - cache restore ivy2-$SEMAPHORE_GIT_BRANCH,ivy2-master
             - cache restore gradle-$SEMAPHORE_GIT_BRANCH,gradle-master
-
-      jobs:
-        - name: Setup
-          commands:
-            # Set the JDK version
-            - sem-version java 11
 
       jobs:
         - name: Tests
