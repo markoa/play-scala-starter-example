@@ -8,6 +8,9 @@ agent:
 blocks:
  - name: Scala with Play on Java 11
    task:
+      env_vars:
+        - name: SCALA_VERSION
+          value: "2.12.6"
       prologue:
           commands:
             - checkout
