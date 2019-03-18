@@ -11,6 +11,8 @@ blocks:
       env_vars: 
         - name: SCALA_VERSION
           value: "2.12"
+        - name: JAVA_VERSION
+          value: "8"
       jobs:
         - name: Tests
           commands:
@@ -19,9 +21,9 @@ blocks:
             - sem-version java $JAVA_VERSION
             - ./scripts/test-sbt
             - ./scripts/test-gradle
-          matrix:
-            - env_var: JAVA_VERSION
-              value: ["8", "11"]
+          #matrix:
+          #  - env_var: JAVA_VERSION
+          #    value: ["8", "11"]
       prologue:
         commands:
           - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
