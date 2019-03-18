@@ -10,7 +10,7 @@ blocks:
     task:
       env_vars: 
         - name: SCALA_VERSION
-          value: ["2.12"]
+          value: "2.12"
       prologue:
         commands:
           - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
