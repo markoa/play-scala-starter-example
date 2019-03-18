@@ -10,14 +10,14 @@ blocks:
     task:
       env_vars: 
         - name: SCALA_VERSION
-          value: "2.12"
+          value: "2.12.6"
         - name: JAVA_VERSION
           value: "8"
       jobs:
         - name: Tests
           commands:
             - checkout
-            - sem-version scala $SCALA_VERSION
+            - sem-version scala 2.12
             - sem-version java $JAVA_VERSION
             - ./scripts/test-sbt
             - ./scripts/test-gradle
