@@ -6,21 +6,11 @@ agent:
     os_image: ubuntu1804
 
 blocks:
-  - name: Scala with Play on Java 11
+  - name: "Scala with Play on Java 11"
     task:
       env_vars: 
         - name: SCALA_VERSION
           value: "2.12"
-      prologue:
-        commands:
-          - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
-          - cache restore ivy2-$SEMAPHORE_GIT_BRANCH,ivy2-master
-          - cache restore gradle-$SEMAPHORE_GIT_BRANCH,gradle-master
-      epilogue:
-        commands:
-        - cache store sbt-$SEMAPHORE_GIT_BRANCH .sbt
-        - cache store ivy2-$SEMAPHORE_GIT_BRANCH .ivy2/cache
-        - cache store gradle-$SEMAPHORE_GIT_BRANCH .gradle/caches
       jobs:
         - name: Tests
           commands:
@@ -32,3 +22,13 @@ blocks:
           matrix:
             - env_var: JAVA_VERSION
               value: ["8", "11"]
+      prologue:
+        commands:
+          - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
+          - cache restore ivy2-$SEMAPHORE_GIT_BRANCH,ivy2-master
+          - cache restore gradle-$SEMAPHORE_GIT_BRANCH,gradle-master
+      epilogue:
+        commands:
+        - cache store sbt-$SEMAPHORE_GIT_BRANCH .sbt
+        - cache store ivy2-$SEMAPHORE_GIT_BRANCH .ivy2/cache
+        - cache store gradle-$SEMAPHORE_GIT_BRANCH .gradle/caches
