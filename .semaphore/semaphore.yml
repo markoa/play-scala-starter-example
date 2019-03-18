@@ -21,7 +21,6 @@ blocks:
         - cache store sbt-$SEMAPHORE_GIT_BRANCH .sbt
         - cache store ivy2-$SEMAPHORE_GIT_BRANCH .ivy2/cache
         - cache store gradle-$SEMAPHORE_GIT_BRANCH .gradle/caches
-      
       jobs:
         - name: Tests
           commands:
