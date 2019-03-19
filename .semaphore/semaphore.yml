@@ -20,8 +20,8 @@ blocks:
             - ./scripts/test-sbt
             - ./scripts/test-gradle
           matrix:
-            - env_vars: JAVA_VERSION
-              value: ["8", "11"]
+            - env_var: JAVA_VERSION
+              values: ["8", "11"]
       prologue:
         commands:
           - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
