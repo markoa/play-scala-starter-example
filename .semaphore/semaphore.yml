@@ -1,0 +1,34 @@
+version: v1.0
+name: YAML file example for Scala with Play project
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: "Scala with Play"
+    task:
+      env_vars: 
+        - name: SCALA_VERSION
+          value: "2.12.6"
+      jobs:
+        - name: Tests
+          commands:
+            - checkout
+            - sem-version scala 2.12
+            - sem-version java $JAVA_VERSION
+            - ./scripts/test-sbt
+            - ./scripts/test-gradle
+          matrix:
+            - env_var: JAVA_VERSION
+              values: ["8", "11"]
+      prologue:
+        commands:
+          - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
+          - cache restore ivy2-$SEMAPHORE_GIT_BRANCH,ivy2-master
+          - cache restore gradle-$SEMAPHORE_GIT_BRANCH,gradle-master
+      epilogue:
+        commands:
+        - cache store sbt-$SEMAPHORE_GIT_BRANCH .sbt
+        - cache store ivy2-$SEMAPHORE_GIT_BRANCH .ivy2/cache
+        - cache store gradle-$SEMAPHORE_GIT_BRANCH .gradle/caches
