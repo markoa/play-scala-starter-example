@@ -29,6 +29,7 @@ blocks:
           - cache restore gradle-$SEMAPHORE_GIT_BRANCH,gradle-master
       epilogue:
         commands:
+        - ls -lah
         - cache store sbt-$SEMAPHORE_GIT_BRANCH .sbt
         - cache store ivy2-$SEMAPHORE_GIT_BRANCH .ivy2/cache
         - cache store gradle-$SEMAPHORE_GIT_BRANCH .gradle/caches
