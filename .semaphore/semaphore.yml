@@ -12,6 +12,13 @@ blocks:
         # Needed for use in scripts/test-sbt and scripts/test-gradle
         - name: SCALA_VERSION
           value: "2.12.6"
+      prologue:
+        commands:
+          - cd $HOME
+          - ls -lah
+          - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
+          - cache restore ivy2-$SEMAPHORE_GIT_BRANCH,ivy2-master
+          - cache restore gradle-$SEMAPHORE_GIT_BRANCH,gradle-master
       jobs:
         - name: Tests
           commands:
@@ -24,13 +31,6 @@ blocks:
           matrix:
             - env_var: JAVA_VERSION
               values: ["8", "11"]
-      prologue:
-        commands:
-          - cd $HOME
-          - ls -lah
-          - cache restore sbt-$SEMAPHORE_GIT_BRANCH,sbt-master
-          - cache restore ivy2-$SEMAPHORE_GIT_BRANCH,ivy2-master
-          - cache restore gradle-$SEMAPHORE_GIT_BRANCH,gradle-master
       epilogue:
         commands:
         - cd $HOME
